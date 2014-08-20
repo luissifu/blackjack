@@ -16,4 +16,5 @@ int main() {
 
 	int ch;
 	cin >> ch;
+	cout<<"rubyisfag"<<endl;
 }
