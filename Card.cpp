@@ -47,21 +47,18 @@ void Card::muestra()
 	cout << s << ":" << v << endl;
 }
 
-/*
-void Card::dibujaPoligono(int xMin, int xMax, int yMin, int yMax)
+
+void Card::drawBackground(int xMin, int xMax, int yMin, int yMax)
 {
+	glColor3ub(255,255,255);
 	glBegin(GL_POLYGON);
-	glVertex2d( xMin,yMin);
-	glVertex2d( xMax,yMin );
-	glVertex2d( xMax,yMax);
-	glVertex2d( xMin,yMax);
+		glVertex2d( xMin,yMin);
+		glVertex2d( xMax,yMin );
+		glVertex2d( xMax,yMax);
+		glVertex2d( xMin,yMax);
 	glEnd();
-	
 }
 void Card::draw(int x, int y)
 {
-	glColor3ub(0, 0, 255);
-	dibujaPoligono(x, x+50, y, y+100);
-
+	drawBackground(x, x + 50, y, y + 100);
 }
-*/

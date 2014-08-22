@@ -29,5 +29,8 @@ int Hand::getValue() {
 }
 
 void Hand::draw(int x, int y) {
-	//do nothing
+	for (int i = 0; i < cards.size(); i++)
+	{
+		cards[i].draw(x + i * 60, y);
+	}
 }
