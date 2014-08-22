@@ -37,6 +37,7 @@ void display(){
 	glFlush();
 }
 
+<<<<<<< HEAD
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
@@ -49,3 +50,9 @@ int main(int argc, char** argv) {
 	glutMainLoop();
 	return 0;
 }
+=======
+	int ch;
+	cin >> ch;
+	cout<<"rubyisfag"<<endl;
+}
+>>>>>>> cf80b87590f23c156060fa53526fcacbb2a12bc8
