@@ -23,6 +23,8 @@ void init() {
 
 void gameInit() {
 	deck.shuffle();
+	player.clear();
+	dealer.clear();
 	player.addCard(deck.dealCard());
 	dealer.addCard(deck.dealCard());
 	player.addCard(deck.dealCard());

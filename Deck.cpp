@@ -60,6 +60,11 @@ Deck::Deck() {
 }
 
 void Deck::shuffle() {
+	while (!deck.empty())
+	{
+		deck.pop();
+	}
+
 	bool inDeck[52] {
 		false, false, false, false, false, false, false, false, false, false, false, false, false,
 		false, false, false, false, false, false, false, false, false, false, false, false, false,

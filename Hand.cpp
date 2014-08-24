@@ -34,3 +34,7 @@ void Hand::draw(int x, int y) {
 		cards[i].draw(x + i * 60, y);
 	}
 }
+
+void Hand::clear() {
+	cards.clear();
+}

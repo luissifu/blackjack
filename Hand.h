@@ -21,6 +21,7 @@ class Hand {
 		void addCard(Card card);
 		int getValue();
 		void draw(int x, int y);
+		void clear();
 	private:
 		std::vector<Card> cards;
 		int cont;
