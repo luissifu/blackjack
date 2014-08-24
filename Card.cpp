@@ -38,7 +38,7 @@ int Card::getRealValue() {
 	else if (v == 'A')
 		return 1;
 	else
-		return 10;
+		return 11;
 }
 
 

@@ -1,5 +1,6 @@
+#include <windows.h>
 #include "includeGL.h"
-
+#include <iostream>
 #include "Card.h"
 #include "Hand.h"
 #include "Deck.h"
@@ -36,15 +37,34 @@ void display(){
 
 	glFlush();
 }
+void keyboard(unsigned char key, int x, int y)
+{
+switch(key) {
+case 'd':
+gameInit();
+break;
+case 'b':
+// call a function
+break;
+
+default:
+break;
+}
+glutPostRedisplay(); /* this redraws the scene without
+waiting for the display callback so that any changes appear
+instantly */
+}
 
 int main(int argc, char** argv) {
+    char choice;
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glutInitWindowSize(winWidth, winHeight);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("BlackJack");
 	init();
-	gameInit();
+	glutKeyboardFunc(keyboard);
+
 	glutDisplayFunc(display);
 	glutMainLoop();
 	return 0;
