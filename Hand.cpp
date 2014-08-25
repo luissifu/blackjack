@@ -29,7 +29,7 @@ int Hand::getValue() {
 }
 
 void Hand::draw(int x, int y) {
-	for (int i = 0; i < cards.size(); i++)
+	for (int i = 0; i < cont; i++)
 	{
 		cards[i].draw(x + i * 60, y);
 	}
@@ -37,5 +37,5 @@ void Hand::draw(int x, int y) {
 
 void Hand::clear() {
 	cards.clear();
-
+	cont = 0;
 }

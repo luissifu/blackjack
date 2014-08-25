@@ -9,7 +9,8 @@ using namespace std;
 
 const int winWidth = 500;
 const int winHeight = 500;
-bool bandera=true;
+//bool bandera; que hace esto?
+bool gameOver;
 
 Deck deck;
 Hand player;
@@ -32,24 +33,33 @@ void gameInit()
     dealer.addCard(deck.dealCard());
     player.addCard(deck.dealCard());
     dealer.addCard(deck.dealCard());
-    bandera=true;
+	gameOver = false;
+}
 
+void onGameOver() {
+	gameOver = true;
+	//implemeenta esta funcion
+	//aqui decide quien gano
 }
 
 void hit()
 {
-    if(player.getValue()<=21 and bandera){
-    player.addCard(deck.dealCard());;
+	if (player.getValue() <= 21) 
+	{
+		player.addCard(deck.dealCard());
     }
-
+	else
+	{
+		onGameOver();
+	}
 }
+
 void stand()
 {
-    bandera=false;
-    while(dealer.getValue()<=17){
-    dealer.addCard(deck.dealCard());;
+	while(dealer.getValue()<=17){
+		dealer.addCard(deck.dealCard());
     }
-
+	onGameOver();
 }
 
 void display()
@@ -61,38 +71,39 @@ void display()
 
     glFlush();
 }
+
 void keyboard(unsigned char key, int x, int y)
 {
     switch(key)
     {
+		/*case 27:
+			glutDestroyWindow(win);
+			  exit (0);
 
-    /*case 27:
-        glutDestroyWindow(win);
-          exit (0);
+		break;*/
 
-    break;*/
-    case 'd':
-        gameInit();
-        break;
-    case 'D':
-        gameInit();
-        break;
+		case 'd':
+		case 'D':
+			gameInit();
+			break;
 
-    case 'h':
-        hit();
-// call a function
-        break;
-         case 's':
-        stand();
-// call a function
-        break;
+		case 'h':
+		case 'H':
+			if (!gameOver)
+				hit();
+			break;
 
-    default:
-        break;
+		case 's':
+		case 'S':
+			if (!gameOver)
+				stand();
+			break;
+
+		default:
+			break;
     }
-    glutPostRedisplay(); /* this redraws the scene without
-waiting for the display callback so that any changes appear
-instantly */
+
+    glutPostRedisplay();
 }
 
 int main(int argc, char** argv)
