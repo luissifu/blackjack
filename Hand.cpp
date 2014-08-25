@@ -37,4 +37,5 @@ void Hand::draw(int x, int y) {
 
 void Hand::clear() {
 	cards.clear();
+
 }
