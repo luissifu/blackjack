@@ -2,6 +2,7 @@
 #include "includeGL.h"
 #include <iostream>
 #include <cstdlib>
+#include <sstream>
 #include "Card.h"
 #include "Hand.h"
 #include "Deck.h"
@@ -19,6 +20,12 @@ bool flagl;
 Deck deck;
 Hand player;
 Hand dealer;
+
+string toString(int value) {
+	stringstream ss;
+	ss << value;
+	return ss.str();
+}
 
 void init()
 {
@@ -96,8 +103,8 @@ void display()
 	drawText(20, 90, "DEALER -", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 	drawText(20, 290, "PLAYER -", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 
-	drawText(120, 90, std::to_string(dealer.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-	drawText(120, 290, std::to_string(player.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(120, 90, toString(dealer.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(120, 290, toString(player.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 
 	if (flagl)
 	{
