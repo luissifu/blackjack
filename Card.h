@@ -33,6 +33,10 @@ class Card
 		// Atributos
 		char s, v;
 		void drawText(int x, int y, std::string text, void* font, int r, int g, int b);
+		void drawHeart(int x, int y);
+		void drawSpade(int x, int y);
+		void drawClub(int x, int y);
+		void drawDiamond(int x, int y);
 };
 
 #endif
