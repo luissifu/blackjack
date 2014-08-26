@@ -9,10 +9,9 @@
 #ifndef BlackJack_Card_h
 #define BlackJack_Card_h
 
-#include <string.h>
 #include "includeGL.h"
 
-using namespace std;
+#include <string>
 
 class Card
 {
@@ -33,6 +32,7 @@ class Card
 	private:
 		// Atributos
 		char s, v;
+		void drawText(int x, int y, std::string text, void* font, int r, int g, int b);
 };
 
 #endif

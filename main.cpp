@@ -1,6 +1,7 @@
 #include <windows.h>
 #include "includeGL.h"
 #include <iostream>
+#include <cstdlib>
 #include "Card.h"
 #include "Hand.h"
 #include "Deck.h"
@@ -14,7 +15,6 @@ const int winHeight = 500;
 bool gameOver;
 bool flagw;
 bool flagl;
-bool flagstart=false;
 
 Deck deck;
 Hand player;
@@ -26,9 +26,6 @@ void init()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(0, 500, 500, 0);
-
-
-
 }
 
 void gameInit()
@@ -41,46 +38,53 @@ void gameInit()
     player.addCard(deck.dealCard());
     dealer.addCard(deck.dealCard());
 	gameOver = false;
-	flagw=false;
-	flagl=false;
-	flagstart=true;
+	flagw = false;
+	flagl = false;
 }
 
 void onGameOver() {
 	gameOver = true;
-	if(player.getValue()==dealer.getValue()or (dealer.getValue()>player.getValue()and dealer.getValue()<=21))
+	if( player.getValue() == dealer.getValue() || ( dealer.getValue() > player.getValue() && dealer.getValue() <= 21 ) || player.getValue() > 21)
     {
-        flagl=true;
+        flagl = true;
     }
-    else if(dealer.getValue()>21 and player.getValue()<=21){
-        flagw=true;
-    }
-	//implemeenta esta funcion
-	//aqui decide quien gano
-}
-
-void hit()
-{   if(flagstart){
-	if (player.getValue() <= 21)
+    else
 	{
-		player.addCard(deck.dealCard());
+        flagw = true;
     }
-	else
-	{   flagl=true;
-		onGameOver();
-	}
-}
 }
 
 void stand()
 {
-    if(flagstart){
-	while(dealer.getValue()<=17){
+	while (dealer.getValue() <= 17 && dealer.getValue() < player.getValue()){
 		dealer.addCard(deck.dealCard());
-    }
+	}
 
 	onGameOver();
-    }}
+}
+
+void hit()
+{   
+	player.addCard(deck.dealCard());
+	if (player.getValue() >= 21)
+	{
+		if (player.getValue() == 21)
+			stand();
+		onGameOver();
+	}
+}
+
+
+void drawText(int x, int y, std::string text, void* font, int r, int g, int b) {
+	glColor3ub(r, g, b);
+	glRasterPos2i(x, y);
+
+	for (string::iterator i = text.begin(); i != text.end(); ++i)
+	{
+		char c = *i;
+		glutBitmapCharacter(font, c);
+	}
+}
 
 void display()
 {
@@ -89,118 +93,24 @@ void display()
     dealer.draw(20, 100);
     player.draw(20, 300);
 
-    glColor3ub(255,255,255);
-	glRasterPos2i(20,250);
-    char p='P';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,p);
-     glColor3ub(255,255,255);
-	glRasterPos2i(40,250);
-    char l='L';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,l);
-     glColor3ub(255,255,255);
-	glRasterPos2i(60,250);
-    char a='A';
-     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,a);
-     glColor3ub(255,255,255);
-	glRasterPos2i(80,250);
-    char y='Y';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,y);
-     glColor3ub(255,255,255);
-	glRasterPos2i(100,250);
-    char e='E';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,e);
-     glColor3ub(255,255,255);
-	glRasterPos2i(120,250);
-    char r='R';
-     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,r);
+	drawText(20, 90, "DEALER -", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(20, 290, "PLAYER -", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 
-       glColor3ub(255,255,255);
-	glRasterPos2i(20,050);
-    char d='D';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,d);
-     glColor3ub(255,255,255);
-	glRasterPos2i(40,050);
+	drawText(120, 90, std::to_string(dealer.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(120, 290, std::to_string(player.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,e);
-     glColor3ub(255,255,255);
-	glRasterPos2i(60,050);
-     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,a);
-     glColor3ub(255,255,255);
-	glRasterPos2i(80,050);
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,l);
-     glColor3ub(255,255,255);
-	glRasterPos2i(100,050);
-
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,e);
-     glColor3ub(255,255,255);
-	glRasterPos2i(120,050);
-
-     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,r);
-
-
-
-if(flagw){
- glColor3ub(255,255,255);
-	glRasterPos2i(200,250);
-    char text='Y';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text);
-     glColor3ub(255,255,255);
-	glRasterPos2i(220,250);
-    char text1='O';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text1);
-     glColor3ub(255,255,255);
-	glRasterPos2i(235,250);
-    char text2='U';
-     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text2);
-     glColor3ub(255,255,255);
-	glRasterPos2i(260,250);
-    char text3='W';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text3);
-     glColor3ub(255,255,255);
-	glRasterPos2i(280,250);
-    char text4='I';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text4);
-     glColor3ub(255,255,255);
-	glRasterPos2i(290,250);
-    char text5='N';
-     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text5);
- }
-
- if(flagl){
- glColor3ub(255,255,255);
-	glRasterPos2i(200,250);
-    char text='Y';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text);
-     glColor3ub(255,255,255);
-	glRasterPos2i(220,250);
-    char text1='O';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text1);
-     glColor3ub(255,255,255);
-	glRasterPos2i(235,250);
-    char text2='U';
-     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text2);
-     glColor3ub(255,255,255);
-	glRasterPos2i(260,250);
-    char text3='L';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text3);
-     glColor3ub(255,255,255);
-	glRasterPos2i(270,250);
-    char text4='O';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text4);
-       glColor3ub(255,255,255);
-	glRasterPos2i(290,250);
-    char text6='S';
-    glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text6);
-     glColor3ub(255,255,255);
-	glRasterPos2i(310,250);
-    char text7='E';
-     glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,text7);
- }
-
-
+	if (flagl)
+	{
+		drawText(200, 90, "YOU LOSE", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	}
+	else if (flagw)
+	{
+		drawText(200, 90, "YOU WIN", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	}
 
     glFlush();
 }
+
 
 void keyboard(unsigned char key, int x, int y)
 {
@@ -245,8 +155,8 @@ int main(int argc, char** argv)
     glutInitWindowPosition(100, 100);
     glutCreateWindow("BlackJack");
     init();
+	gameInit();
     glutKeyboardFunc(keyboard);
-
     glutDisplayFunc(display);
     glutMainLoop();
     return 0;

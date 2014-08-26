@@ -72,7 +72,7 @@ void Deck::shuffle() {
 		false, false, false, false, false, false, false, false, false, false, false, false, false
 	};
 
- 	std::srand(std::time(0));
+ 	std::srand(std::time(0) + std::clock());
 
 	for (int i = 0; i < 52; i++)
 	{

@@ -58,7 +58,7 @@ void Card::drawBackground(int xMin, int xMax, int yMin, int yMax) {
 	glEnd();
 }
 
-void drawText(int x, int y, std::string text, void* font, int r, int g, int b) {
+void Card::drawText(int x, int y, std::string text, void* font, int r, int g, int b) {
 	glColor3ub(r, g, b);
 	glRasterPos2i(x, y);
 
@@ -73,7 +73,12 @@ void Card::draw(int x, int y) {
 	glColor3ub(255,255,255);
 	drawBackground(x, x + 50, y, y + 100);
 	std::string text = "";
-	text += v;
+	
+	if (v == 'T')
+		text = "10";
+	else
+		text += v;
+	
 	int r = 0;
 
 	if (s == 'H' || s == 'D')
