@@ -21,28 +21,29 @@ void Hand::addCard(Card card) {
 
 int Hand::getValue() {
 	int value = 0;
-	int value2=0;
-	if(value=0)
-    {
-        flagAs=false;
-    }
-	for (int i = 0; i < cont; i++)
-	{   value2=value;
-		value += cards[i].getRealValue();
-		if((value-value2)==11)
-        {
-            flagAs=true;
-        }
-        if(flagAs)
-        {
-            if(value>21)
-            {
-                value-=10;
-                flagAs=false;
-            }
-        }
+	int aces = 0;
 
+	for (int i = 0; i < cont; i++)
+	{
+		if (cards[i].getValue() == 'A')
+		{
+			aces++;
+		}
+
+		value += cards[i].getRealValue();
 	}
+
+	if (value > 21 && aces > 0)
+	{
+		while (aces > 0)
+		{
+			aces--;
+			value -= 10;
+			if (value <= 21)
+				break;
+		}
+	}
+
 	return value;
 }
 
