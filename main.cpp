@@ -1,3 +1,5 @@
+//Luis Eduardo Sifuentes Infante a01138688
+//Jose Luis Padilla Gonzalez a01136406
 #include <windows.h>
 #include "includeGL.h"
 #include <iostream>
