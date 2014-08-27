@@ -16,6 +16,7 @@ const int winHeight = 500;
 bool gameOver;
 bool flagw;
 bool flagl;
+bool flagexit=false;
 int scoreDealer=0;
 int scorePlayer=0;
 
@@ -99,6 +100,7 @@ void drawText(int x, int y, std::string text, void* font, int r, int g, int b) {
 
 void display()
 {
+
     glClear(GL_COLOR_BUFFER_BIT);
 
     dealer.draw(20, 100);
@@ -137,11 +139,10 @@ void keyboard(unsigned char key, int x, int y)
 {
     switch(key)
     {
-		/*case 27:
-			glutDestroyWindow(win);
-			  exit (0);
+		case 27:
 
-		break;*/
+		   exit(0);
+		break;
 
 		case 'd':
 		case 'D':
@@ -175,10 +176,16 @@ int main(int argc, char** argv)
     glutInitWindowSize(winWidth, winHeight);
     glutInitWindowPosition(100, 100);
     glutCreateWindow("BlackJack");
+
     init();
 	gameInit();
     glutKeyboardFunc(keyboard);
     glutDisplayFunc(display);
+
     glutMainLoop();
-    return 0;
+
+
+
+
+       return 0;
 }

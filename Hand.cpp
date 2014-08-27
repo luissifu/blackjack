@@ -22,6 +22,10 @@ void Hand::addCard(Card card) {
 int Hand::getValue() {
 	int value = 0;
 	int value2=0;
+	if(value=0)
+    {
+        flagAs=false;
+    }
 	for (int i = 0; i < cont; i++)
 	{   value2=value;
 		value += cards[i].getRealValue();
