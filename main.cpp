@@ -16,6 +16,8 @@ const int winHeight = 500;
 bool gameOver;
 bool flagw;
 bool flagl;
+int scoreDealer=0;
+int scorePlayer=0;
 
 Deck deck;
 Hand player;
@@ -54,10 +56,12 @@ void onGameOver() {
 	if( player.getValue() == dealer.getValue() || ( dealer.getValue() > player.getValue() && dealer.getValue() <= 21 ) || player.getValue() > 21)
     {
         flagl = true;
+        scoreDealer++;
     }
     else
 	{
         flagw = true;
+        scorePlayer++;
     }
 }
 
@@ -71,7 +75,7 @@ void stand()
 }
 
 void hit()
-{   
+{
 	player.addCard(deck.dealCard());
 	if (player.getValue() >= 21)
 	{
@@ -102,7 +106,17 @@ void display()
 
 	drawText(20, 90, "DEALER -", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 	drawText(20, 290, "PLAYER -", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(100, 420, "D-Deal", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(200, 420, "H-Hit", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(300, 420, "S-Stand", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    drawText(20, 460, "Luis Eduardo Sifuentes a01138688", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    drawText(20, 480, "Jose Luis Padilla a01136406", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 
+	drawText(20, 40, "Score", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    drawText(80, 40, "DEALER :", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(230, 40, "PLAYER :", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    drawText(180, 40, toString(scoreDealer), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    drawText(340, 40, toString(scorePlayer), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 	drawText(120, 90, toString(dealer.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 	drawText(120, 290, toString(player.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 
