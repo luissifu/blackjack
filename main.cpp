@@ -21,6 +21,13 @@ bool flagl;
 bool flagexit=false;
 int scoreDealer=0;
 int scorePlayer=0;
+bool showdealer=true;
+bool valor1=true;
+string dealertemp;
+bool flaglastW=false;
+bool flaglastL=false;
+bool surrender=false;
+bool lsurrend=false;
 
 Deck deck;
 Hand player;
@@ -37,7 +44,8 @@ void init()
     glClearColor(0.011, 0.75, 0.23, 1.0);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(0, 500, 500, 0);
+    gluOrtho2D(0, 500, 600, 0);
+
 }
 
 void gameInit()
@@ -52,19 +60,27 @@ void gameInit()
 	gameOver = false;
 	flagw = false;
 	flagl = false;
+	surrender=false;
 }
 
 void onGameOver() {
 	gameOver = true;
-	if( player.getValue() == dealer.getValue() || ( dealer.getValue() > player.getValue() && dealer.getValue() <= 21 ) || player.getValue() > 21)
+	if(surrender || player.getValue() == dealer.getValue() || ( dealer.getValue() > player.getValue() && dealer.getValue() <= 21 ) || player.getValue() > 21)
     {
         flagl = true;
         scoreDealer++;
+        flaglastL=true;
+        flaglastW=false;
+        lsurrend=surrender;
     }
     else
 	{
         flagw = true;
         scorePlayer++;
+        flaglastW=true;
+        flaglastL=false;
+        lsurrend=false;
+
     }
 }
 
@@ -105,32 +121,52 @@ void display()
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    dealer.draw(20, 100);
-    player.draw(20, 300);
+    dealer.draw(20, 200);
+    player.draw(20, 400);
 
-	drawText(20, 90, "DEALER -", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-	drawText(20, 290, "PLAYER -", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-	drawText(100, 420, "D-Deal", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-	drawText(200, 420, "H-Hit", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-	drawText(300, 420, "S-Stand", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-    drawText(20, 460, "Luis Eduardo Sifuentes a01138688", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-    drawText(20, 480, "Jose Luis Padilla a01136406", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    if(showdealer){
 
-	drawText(20, 40, "Score", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-    drawText(80, 40, "DEALER :", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-	drawText(230, 40, "PLAYER :", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-    drawText(180, 40, toString(scoreDealer), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-    drawText(340, 40, toString(scorePlayer), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-	drawText(120, 90, toString(dealer.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-	drawText(120, 290, toString(player.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    glColor3ub(255,0,0);
+    glBegin(GL_POLYGON);
+		glVertex2d( 83,203);
+		glVertex2d( 83,297 );
+		glVertex2d( 127,297);
+		glVertex2d( 127,203);
+	glEnd();
+    }
+    drawText(200, 50, "Black Jack", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    drawText(150, 100, "Last Game: ", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    if(flaglastL && !lsurrend)
+    drawText(250, 100, "You Lost", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    if(flaglastW)
+    drawText(250, 100, "You Won", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    if(lsurrend)
+    drawText(250, 100, "You surrended", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+
+	drawText(20, 190, "DEALER -", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(20, 390, "PLAYER -", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(100, 520, "D-Deal", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(200, 520, "H-Hit", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(300, 520, "S-Stand", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    drawText(20, 560, "Luis Eduardo Sifuentes a01138688", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    drawText(20, 580, "Jose Luis Padilla a01136406", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+
+	drawText(20, 140, "Score", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    drawText(80, 140, "DEALER :", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(230, 140, "PLAYER :", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    drawText(180, 140, toString(scoreDealer), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    drawText(340, 140, toString(scorePlayer), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+    if(!showdealer)
+	drawText(120, 190, toString(dealer.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+	drawText(120, 390, toString(player.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 
 	if (flagl)
 	{
-		drawText(200, 90, "YOU LOSE", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+		drawText(200, 190, "YOU LOSE", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 	}
 	else if (flagw)
 	{
-		drawText(200, 90, "YOU WIN", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
+		drawText(200, 190, "YOU WIN", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 	}
 
     glFlush();
@@ -148,7 +184,11 @@ void keyboard(unsigned char key, int x, int y)
 
 		case 'd':
 		case 'D':
+		    if(!gameOver){
+                surrender=true;
+                onGameOver();}
 			gameInit();
+			showdealer=true;
 			break;
 
 		case 'h':
@@ -161,6 +201,7 @@ void keyboard(unsigned char key, int x, int y)
 		case 'S':
 			if (!gameOver)
 				stand();
+				showdealer=false;
 			break;
 
 		default:
