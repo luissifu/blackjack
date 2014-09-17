@@ -124,7 +124,7 @@ void display()
     dealer.draw(20, 200);
     player.draw(20, 400);
 
-    if(showdealer){
+    if(showdealer and !flagw and !flagl){
 
     glColor3ub(255,0,0);
     glBegin(GL_POLYGON);
@@ -156,7 +156,7 @@ void display()
 	drawText(230, 140, "PLAYER :", GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
     drawText(180, 140, toString(scoreDealer), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
     drawText(340, 140, toString(scorePlayer), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
-    if(!showdealer)
+    if(!showdealer or flagw)
 	drawText(120, 190, toString(dealer.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 	drawText(120, 390, toString(player.getValue()), GLUT_BITMAP_HELVETICA_18, 255, 255, 255);
 
